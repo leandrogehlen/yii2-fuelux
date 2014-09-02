@@ -1,0 +1,27 @@
+{
+        "name": "leandrogehlen/yii2-fuelux",
+        "description": "Extension for Yii 2 to work with Fuel UX",
+        "keywords": ["yii2", "extension", "fuel", "ux", "fuelux"],
+        "type": "yii2-extension",
+        "license": "BSD-3-Clause",
+        "support": {
+                "issues": "https://github.com/leandrogehlen/yii2-fuelux/issues",
+                "source": "https://github.com/leandrogehlen/yii2-fuelux"
+        },
+        "minimum-stability": "dev",
+        "authors": [
+            {
+                "name": "Leandro Guindani Gehlen",
+                "email": "leandrogehlen@gmail.com"
+            }
+        ],
+        "require": {
+                "yiisoft/yii2": "*"                
+        },    
+        "require-dev": {
+                "phpunit/phpunit": "3.7.*"          
+        },    
+        "autoload": {
+                "psr-4": { "leandrogehlen\\fuelux\\": "" }
+        }
+}
