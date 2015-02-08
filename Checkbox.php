@@ -53,6 +53,8 @@ class Checkbox extends InputWidget
         } else {
             $this->renderCheckbox();
         }
+
+        FueluxAsset::register($this->getView());
     }
 
     /**

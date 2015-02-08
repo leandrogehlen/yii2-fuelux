@@ -6,7 +6,7 @@ use yii\web\AssetBundle;
 
 class FueluxAsset extends AssetBundle
 {
-    public $sourcePath = '@vendor/leandrogehlen/yii2-fuelux/assets';
+    public $sourcePath = '@bower/fuelux/dist';
 
     public $css = [
         'css/fuelux.min.css'
