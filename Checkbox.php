@@ -28,6 +28,11 @@ class Checkbox extends InputWidget
      */
     public $highlight = false;
 
+    /**
+     * @var boolean whether controls is addon checkbox.
+     */
+    public $addon = false;
+
     private $_internalOptions;
 
     /**
@@ -36,11 +41,16 @@ class Checkbox extends InputWidget
     public function init()
     {
         parent::init();
-        $this->initInternalOptions();
 
-        if ($this->label == null && $this->hasModel()) {
+        if ($this->addon) {
+            $this->inline = true;
+        }
+
+        if ($this->label == null && !$this->addon && $this->hasModel()) {
             $this->label = $this->model->getAttributeLabel($this->attribute);
         }
+
+        $this->initInternalOptions();
     }
 
     /**
@@ -66,7 +76,7 @@ class Checkbox extends InputWidget
      */
     public function renderCheckbox()
     {
-        if ($this->inline == true){
+        if ($this->inline){
             Html::addCssClass($this->_internalOptions, 'checkbox-custom checkbox-inline');
             echo Html::beginTag('label', $this->_internalOptions) . "\n";
         } else {
@@ -95,6 +105,10 @@ class Checkbox extends InputWidget
 
         if (!$this->inline) {
             Html::addCssClass($this->_internalOptions, 'checkbox');
+        }
+
+        if ($this->addon) {
+            Html::addCssClass($this->_internalOptions, 'input-group-addon');
         }
 
         if ($this->highlight === true) {
