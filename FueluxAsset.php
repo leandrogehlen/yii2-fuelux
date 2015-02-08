@@ -8,6 +8,10 @@ class FueluxAsset extends AssetBundle
 {
     public $sourcePath = '@bower/fuelux/dist';
 
+    public $depends = [
+        'yii\bootstrap\BootstrapPluginAsset',
+    ];
+
     public $css = [
         'css/fuelux.min.css'
     ];
