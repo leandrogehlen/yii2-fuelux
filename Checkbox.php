@@ -37,6 +37,10 @@ class Checkbox extends InputWidget
     {
         parent::init();
         $this->initInternalOptions();
+
+        if ($this->label == null && $this->hasModel()) {
+            $this->label = $this->model->getAttributeLabel($this->attribute);
+        }
     }
 
     /**
@@ -70,7 +74,7 @@ class Checkbox extends InputWidget
         }
 
         if ($this->hasModel()) {
-            echo Html::activeCheckbox($this->model, $this->attribute, $this->options) . "\n";
+            echo Html::activeInput('checkbox', $this->model, $this->attribute, $this->options) . "\n";
         } else {
             echo Html::checkbox($this->name, $this->value, $this->options) . "\n";
         }
