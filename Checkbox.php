@@ -9,7 +9,6 @@ use yii\widgets\InputWidget;
 /**
  * @see http://exacttarget.github.io/fuelux/javascript.html#checkboxes
  * @author Leandrogehlen <leandroghelen@gmail.com>
- * @since 2.0
  */
 class Checkbox extends InputWidget
 {
@@ -33,8 +32,6 @@ class Checkbox extends InputWidget
      */
     public $addon = false;
 
-    private $_internalOptions;
-
     /**
      * @inheritdoc
      */
@@ -49,8 +46,6 @@ class Checkbox extends InputWidget
         if ($this->label == null && !$this->addon && $this->hasModel()) {
             $this->label = $this->model->getAttributeLabel($this->attribute);
         }
-
-        $this->initInternalOptions();
     }
 
     /**
@@ -58,28 +53,40 @@ class Checkbox extends InputWidget
      */
     public function run()
     {
-        Html::addCssClass($this->options, 'sr-only');
+        $pluginOptions = [
+            'id' => ArrayHelper::remove($this->options, 'id'),
+            'data-initialize' => 'checkbox'
+        ];
 
-        if (!$this->inline){
-            echo Html::beginTag('div', $this->_internalOptions) . "\n";
-            $this->renderCheckbox();
-            echo Html::endTag('div');
-        } else {
-            $this->renderCheckbox();
+        if (!$this->inline) {
+            Html::addCssClass($pluginOptions, 'checkbox');
         }
 
+        if ($this->addon) {
+            Html::addCssClass($pluginOptions, 'input-group-addon');
+        }
+
+        if ($this->highlight === true) {
+            Html::addCssClass($pluginOptions, 'highlight');
+        }
+
+        Html::addCssClass($this->options, 'sr-only');
+
+        $this->renderCheckbox($pluginOptions);
         FueluxAsset::register($this->getView());
     }
 
     /**
      * Renders the checkbox input
+     * @param array $pluginOptions
      */
-    public function renderCheckbox()
+    public function renderCheckbox($pluginOptions)
     {
         if ($this->inline){
-            Html::addCssClass($this->_internalOptions, 'checkbox-custom checkbox-inline');
-            echo Html::beginTag('label', $this->_internalOptions) . "\n";
+            Html::addCssClass($pluginOptions, 'checkbox-custom checkbox-inline');
+            echo Html::beginTag('label', $pluginOptions) . "\n";
         } else {
+            echo Html::beginTag('div', $pluginOptions) . "\n";
             echo Html::beginTag('label', ['class' => 'checkbox-custom']) . "\n";
         }
 
@@ -90,30 +97,10 @@ class Checkbox extends InputWidget
         }
         echo $this->label . "\n";
         echo Html::endTag('label') . "\n";
-    }
-
-    /**
-     * Initializes the internal options.
-     * This method sets the default values for various options.
-     */
-    protected function initInternalOptions()
-    {
-        $this->_internalOptions = [
-            'id' => ArrayHelper::remove($this->options, 'id'),
-            'data-initialize' => 'checkbox'
-        ];
 
         if (!$this->inline) {
-            Html::addCssClass($this->_internalOptions, 'checkbox');
-        }
-
-        if ($this->addon) {
-            Html::addCssClass($this->_internalOptions, 'input-group-addon');
-        }
-
-        if ($this->highlight === true) {
-            Html::addCssClass($this->_internalOptions, 'highlight');
+            echo Html::endTag('div');
         }
     }
 
-} 
+}
